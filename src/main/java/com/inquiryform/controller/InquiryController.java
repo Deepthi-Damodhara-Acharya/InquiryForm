@@ -20,50 +20,55 @@ import org.springframework.web.bind.annotation.RestController;
 import com.inquiryform.entity.InquiryForm;
 import com.inquiryform.service.InquiryService;
 
-
 @RestController
-@RequestMapping("/contactus")
+//@RequestMapping("/contactus")
 public class InquiryController {
-	
+
 	@Autowired
 	InquiryService inquiryService;
-	
-	@PostMapping("/")
-	public ResponseEntity<String> postContact(@RequestBody InquiryForm contactForm)
-	{
+
+	@PostMapping("/addcontact")
+	public ResponseEntity<String> postContact(@RequestBody InquiryForm contactForm) {
 		inquiryService.addContactDetails(contactForm);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Contact added successfully");
 	}
-	
+
 	@GetMapping("/getContact")
-	public ResponseEntity<?> getContact() throws InterruptedException, ExecutionException
-	{
-		List<InquiryForm> list= inquiryService.getContacts();
-		 
-		 if(list.isEmpty())
-		 {
+	public ResponseEntity<?> getContact() throws InterruptedException, ExecutionException {
+		List<InquiryForm> list = inquiryService.getContacts();
+
+		if (list.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Contacts Found");
-		 }
-		 else
-		 {
-			 return ResponseEntity.status(HttpStatus.OK).body(list);
-		 }
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(list);
+		}
 	}
-	
+
 	@GetMapping("/getContact/{id}")
-	public ResponseEntity<?> getContactById(@PathVariable String id)
-	{
-		
+	public ResponseEntity<?> getContactById(@PathVariable String id) {
+
 		Optional<InquiryForm> inquiry = inquiryService.getContactById(id);
-        if(inquiry.isPresent())
-        {
-        	return ResponseEntity.status(HttpStatus.OK).body(inquiry);
-        }
-        else {
-        	return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entered documentId is not present");
-        }
+		if (inquiry.isPresent()) {
+			return ResponseEntity.status(HttpStatus.OK).body(inquiry);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entered documentId is not present");
+		}
+	}
+
+	@GetMapping
+	public ResponseEntity<String> home() {
+		String message="You are on homepage";
+		HttpStatus status = HttpStatus.OK;
+		return ResponseEntity.status(HttpStatus.OK).body(message+ "\n" +status);
 	}
 	
+	@GetMapping("/*")
+	public ResponseEntity<String> error() {
+		String message="404 Not Found - The requested resource was not found on this server.";
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		return ResponseEntity.status(status).body(message);
+	}
+
 //	@PutMapping("/updateContact")
 //	public ResponseEntity<String> updateContact(@RequestBody Inquiry contactForm)
 //	{

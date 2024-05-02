@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Component;
 
+import com.google.cloud.firestore.annotation.DocumentId;
 import com.google.firebase.database.annotations.NotNull;
 
 import lombok.Getter;
@@ -15,8 +16,9 @@ import lombok.Setter;
 @Setter
 public class InquiryForm {
 	
-	private static Long sequenceNumber=0L; 
+	private static Long sequenceNumber=0L;
 	
+	@DocumentId
 	private String documentId;
 	private String name;
 	private String email;

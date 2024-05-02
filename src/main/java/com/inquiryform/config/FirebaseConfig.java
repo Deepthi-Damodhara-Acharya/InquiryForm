@@ -6,14 +6,16 @@ import java.io.IOException;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
-@Service
+
+@Configuration
 public class FirebaseConfig {
 	
 	@PostConstruct
@@ -29,6 +31,7 @@ public class FirebaseConfig {
 
 				FirebaseApp.initializeApp(options);
 	}
+
 
 }
 

@@ -59,7 +59,7 @@ public class InquiryService {
         try {
             ApiFuture<DocumentSnapshot> future = docRef.get();
             DocumentSnapshot document = future.get();
-            System.out.println(document);
+//            System.out.println(document);
             if (document.exists()) {
                 InquiryForm inquiry = document.toObject(InquiryForm.class);
                 return Optional.ofNullable(inquiry);
